@@ -1,3 +1,5 @@
+import matematicas.Operaciones;
+
 public class Examen27112025 {
     public static void main(String[] args) {
         System.out.println("  Pruebas unitarias");

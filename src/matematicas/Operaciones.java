@@ -9,8 +9,8 @@ public class Operaciones {
     * @return  La suma de a y b
     */
     public static int suma(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = num1 + num2;
+        return solucion;
     }
 
     /** inc
@@ -20,8 +20,8 @@ public class Operaciones {
     * @return  El valor recibido incrementado en uno
     */
     public static int inc(int num1){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = suma(num1, 1);
+        return solucion;
     }
     
     /** resta
@@ -32,8 +32,8 @@ public class Operaciones {
     * @return La resta de los dos números
     */
     public static int resta(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = suma(num1, -num2);
+        return solucion;
     }
 
     /** dec
@@ -43,8 +43,8 @@ public class Operaciones {
     * @return  El valor recibido decrementado en uno
     */
     public static int dec(int num1){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = suma(num1, -1);
+        return solucion;
     }
 
     /** esMayor
@@ -56,8 +56,10 @@ public class Operaciones {
     *          false si es igual o menor
     */
     public static boolean esMayor(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        if(resta(num1, num2) > 0){
+            return true;
+        }
+        return false;
     }
 
     /** esMenor
@@ -69,8 +71,12 @@ public class Operaciones {
     *          false si es igual o mayor
     */
     public static boolean esMenor(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        if(esMayor(num1, num2)){
+            return false;
+        }else if(inc(resta(num1, num2)) > 0){
+            return false;
+        }
+        return true;
     }
 
     /** esIgual
@@ -81,8 +87,12 @@ public class Operaciones {
     * @return  true si son iguales y false si son distintos
     */
     public static boolean esIgual(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        if(esMayor(resta(num1, num2), 0)){
+            return false;
+        }else if(esMenor(resta(num1, num2), 0)){
+            return false;
+        }
+        return true;
     }
 
     /** multiplica
@@ -93,8 +103,11 @@ public class Operaciones {
     * @return  El resultado de sumar b veces a
     */
     public static int multiplica(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = 0;
+        for(int i=0; esMenor(i, num2); i = inc(i)){
+            solucion = suma(solucion, num1);
+        }
+        return solucion;
     }
 
     /** divide
@@ -106,8 +119,14 @@ public class Operaciones {
     *          realizando restas
     */
     public static int divide(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = 0;
+        if(esIgual(num2, 0)) return 1;//MATH ERROR;
+        
+        while(esMayor(num1, num2) || esIgual(num1, num2)){
+            num1 = resta(num1, num2);
+            solucion = inc(solucion);
+        }
+        return solucion;
     }
 
     /** resto
@@ -117,9 +136,9 @@ public class Operaciones {
     * @param b Divisor
     * @return  Devuelve el resto de la división entera de a entre b
     */
-    public static int resto(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+    public static int resto(int num1, int num2){ // 13/2 = cociente 6 resto 1 resto == 6*2=12; 13-12=1 
+        int solucion = resta(num1, multiplica(divide(num1, num2), num2));
+        return solucion;
     }
 
     /** potencia
@@ -130,8 +149,11 @@ public class Operaciones {
     * @return          Devuelve la potencia de un número elevado a otro usando multiplicaciones
     */
     public static int potencia(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = num1;
+        for(int i=0; esMenor(i, dec(num2)); i = inc(i)){
+            solucion = multiplica(solucion, num1);
+        }
+        return solucion;
     }
 
     /** cuadrado
@@ -141,8 +163,9 @@ public class Operaciones {
     * @return  Devuelve la potencia de un número elevado a 2
     */
     public static int cuadrado(int num1){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = 0;
+        solucion = multiplica(num1, num1);
+        return solucion;
     }
 
     /** cubo
@@ -152,8 +175,9 @@ public class Operaciones {
     * @return  Devuelve la potencia de un número elevado a 3
     */
     public static int cubo(int num1){
-
-        throw new UnsupportedOperationException("No usado");
+        int solucion = 0;
+        solucion = multiplica(cuadrado(num1), num1);
+        return solucion;
     }
     
     /** esMultiplo
@@ -163,9 +187,11 @@ public class Operaciones {
     * @param b valor con el que comprobar si a es múltiplo de él
     * @return  true si a es múltiplo y false en caso contrario
     */
-    public static boolean esMultiplo(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+    public static boolean esMultiplo(int num1, int num2){ // 25/5=5 15/5=3 10/5=2 9/4=
+        if(esIgual(resto(num1, num2), 0)){
+            return true;
+        }
+        return false;
     }
 
     /** esDivisor
@@ -176,8 +202,10 @@ public class Operaciones {
     * @return  true si a es divisor y false en caso contrario
     */
     public static boolean esDivisor(int num1, int num2){
-
-        throw new UnsupportedOperationException("No usado");
+        if(esIgual(resto(num2, num1), 0)){
+            return true;
+        }
+        return false;
     }
 
     /** esPrimo
@@ -187,8 +215,14 @@ public class Operaciones {
     * @return  true si a es primo y false en caso contrario
     */
     public static boolean esPrimo(int num1){
-
-        throw new UnsupportedOperationException("No usado");
+        if(esMenor(num1, 1) || esIgual(num1, 1))
+            return false;
+        for(int i=2; esMenor(i, divide(num1, 2)) || esIgual(i, divide(num1, 2)); i = inc(i)){
+            if(esIgual(resto(num1, i), 0)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /** esCuadradoPerfecto
@@ -199,7 +233,6 @@ public class Operaciones {
     * @return  true si a es cuadrado perfecto y false en caso contrario
     */
     public static boolean esCuadradoPerfecto(int num1){
-
         throw new UnsupportedOperationException("No usado");
     }
 }

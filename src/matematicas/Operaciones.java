@@ -104,9 +104,33 @@ public class Operaciones {
     */
     public static int multiplica(int num1, int num2){
         int solucion = 0;
-        for(int i=0; esMenor(i, num2); i = inc(i)){
-            solucion = suma(solucion, num1);
+
+        if(esMenor(num1, 0) && esMayor(num2, 0)){
+            num1 = -num1;
+            for(int i=0; esMenor(i, num2); i = inc(i)){
+                solucion = suma(solucion, num1);
+            }
+
+            solucion = -solucion;
+        }else if(esMenor(num2, 0) && esMayor(num1, 0)){
+            num2 = -num2;
+            for(int i=0; esMenor(i, num2); i = inc(i)){
+                solucion = suma(solucion, num1);
+            }
+            solucion = -solucion;
+        }else if(esMenor(num1, 0) && esMenor(num2, 0)){
+            num1 = -num1;
+            num2 = -num2;
+            for(int i=0; esMenor(i, num2); i = inc(i)){
+                solucion = suma(solucion, num1);
+            }
+        }else{
+            for(int i=0; esMenor(i, num2); i = inc(i)){
+                solucion = suma(solucion, num1);
+            }
         }
+
+        
         return solucion;
     }
 
@@ -119,14 +143,42 @@ public class Operaciones {
     *          realizando restas
     */
     public static int divide(int num1, int num2){
-        int solucion = 0;
-        if(esIgual(num2, 0)) return 1;//MATH ERROR;
-        
-        while(esMayor(num1, num2) || esIgual(num1, num2)){
-            num1 = resta(num1, num2);
-            solucion = inc(solucion);
-        }
-        return solucion;
+
+            int solucion = 0;
+
+            if(esIgual(num2, 0))
+                throw new ArithmeticException();
+
+            if(esMenor(num1, 0) && esMayor(num2, 0)){
+                num1 = -num1;
+                while(esMayor(num1, num2) || esIgual(num1, num2)){
+                    num1 = resta(num1, num2);
+                    solucion = inc(solucion);
+                }
+                solucion = -solucion;
+            }else if(esMenor(num2, 0) && esMayor(num1, 0)){
+                num2 = -num2;
+                while(esMayor(num1, num2) || esIgual(num1, num2)){
+                    num1 = resta(num1, num2);
+                    solucion = inc(solucion);
+                }
+                solucion = -solucion;
+            }else if(esMenor(num1, 0) && esMenor(num2, 0)){
+                num1 = -num1;
+                num2 = -num2;
+                while(esMayor(num1, num2) || esIgual(num1, num2)){
+                    num1 = resta(num1, num2);
+                    solucion = inc(solucion);
+                }
+            }else{
+                while(esMayor(num1, num2) || esIgual(num1, num2)){
+                    num1 = resta(num1, num2);
+                    solucion = inc(solucion);
+                }
+            }
+
+            return solucion;
+
     }
 
     /** resto
@@ -137,6 +189,10 @@ public class Operaciones {
     * @return  Devuelve el resto de la división entera de a entre b
     */
     public static int resto(int num1, int num2){ // 13/2 = cociente 6 resto 1 resto == 6*2=12; 13-12=1 
+
+        if(esIgual(num2, 0))
+            throw new ArithmeticException();
+
         int solucion = resta(num1, multiplica(divide(num1, num2), num2));
         return solucion;
     }
@@ -150,6 +206,15 @@ public class Operaciones {
     */
     public static int potencia(int num1, int num2){
         int solucion = num1;
+
+        if(esIgual(num2,0)){
+            return 1;
+        }else if(esIgual(num2,1)){
+            return num1;
+        }else if(esIgual(num1,0)){
+            return 0;
+        }
+
         for(int i=0; esMenor(i, dec(num2)); i = inc(i)){
             solucion = multiplica(solucion, num1);
         }
@@ -202,6 +267,10 @@ public class Operaciones {
     * @return  true si a es divisor y false en caso contrario
     */
     public static boolean esDivisor(int num1, int num2){
+
+        if(esIgual(num1, 0))
+            return false;
+
         if(esIgual(resto(num2, num1), 0)){
             return true;
         }
@@ -233,6 +302,14 @@ public class Operaciones {
     * @return  true si a es cuadrado perfecto y false en caso contrario
     */
     public static boolean esCuadradoPerfecto(int num1){
-        throw new UnsupportedOperationException("No usado");
+        if(esMenor(num1, 0))
+            return false;
+
+        for(int i=0; esMenor(i, num1) || esIgual(i, num1); i = inc(i)){
+            if(esIgual(cuadrado(i), num1)){
+                return true;
+            }
+        }
+        return false;
     }
 }
